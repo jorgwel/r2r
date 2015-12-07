@@ -158,7 +158,7 @@ class EndPointExtractor {
             def extraLevel = this.levelIndicator
             printInternalProperties(extraLevel, actionEntry)
             new QueryParamsMapEntryPrinter(extraLevel).traverse(actionEntry.value.queryParameters)
-            new ResponseMapEntryPrinter(extraLevel).traverse(actionEntry.value.responses)
+            new ResponseMapEntryPrinter("RESPONSE", extraLevel).traverse(actionEntry.value.responses)
 
         }
 
@@ -213,44 +213,29 @@ class EndPointExtractor {
     }
 
 
-    class ResponseMapEntryPrinter implements Traverser<String,Response>, MapEntryPrinter<String, Response> {
+    class ResponseMapEntryPrinter extends RecursivePrinter<String, Response> {
 
-        private String levelIndicator;
-
-        ResponseMapEntryPrinter(String levelIndicator) {
-            this.levelIndicator = levelIndicator
+        ResponseMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
+            super(idOfItemToPrint, levelIndicator)
         }
 
         @Override
-        void traverse(Map<String,Response> responses) {//Map<String, Response>
+        public void printObject(Map.Entry<String, Response> responseEntry) {
 
-            if(responses.size() == 0)
-                return
-
-            println this.levelIndicator + "RESPONSEs: "
-            def responsesIterator = responses.iterator()
-            while(responsesIterator.hasNext()){
-                print responsesIterator.next()
-            }
-        }
-
-        @Override
-        public void print(Map.Entry<String, Response> responseEntry) {
-            def extraLevel = this.levelIndicator + "\t"
-            printInternalProperties(extraLevel, responseEntry)
-
-        }
-
-        private void printInternalProperties(String extraLevel, Map.Entry<String, Response> responseEntry) {
             def response = responseEntry.value
 
-            println extraLevel + "status: " + responseEntry.key
-            println extraLevel + "body: " + response.body
-            println extraLevel + "description: " + response.description
+            printText "status: " + responseEntry.key
+            printText "body: " + response.body
+            printText "description: " + response.description
 
+            callMimeTypePrinter(response)
+
+        }
+
+
+        private void callMimeTypePrinter(Response response) {
             def mimeTypes = response.body
-            new MimeTypeMapEntryPrinter("Mime Type", extraLevel).traverse(mimeTypes)
-
+            new MimeTypeMapEntryPrinter("Mime Type", getLevelIndicator()).traverse(mimeTypes)
         }
 
 
