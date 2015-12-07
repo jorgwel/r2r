@@ -249,53 +249,69 @@ class EndPointExtractor {
             println extraLevel + "description: " + response.description
 
             def mimeTypes = response.body
-            new MimeTypeMapEntryPrinter(extraLevel).traverse(mimeTypes)
+            new MimeTypeMapEntryPrinter("Mime Type", extraLevel).traverse(mimeTypes)
 
         }
 
 
     }
 
-    class MimeTypeMapEntryPrinter implements Traverser<String,MimeType>, MapEntryPrinter<String,MimeType> {
+    class MimeTypeMapEntryPrinter extends RecursivePrinter<String,MimeType> {
 
-        private String levelIndicator;
+        MimeTypeMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
+            super(idOfItemToPrint, levelIndicator)
+        }
 
-        MimeTypeMapEntryPrinter(String levelIndicator) {
+        @Override
+        public void printObject(Map.Entry<String,MimeType> mimeTypeEntry) {
+
+            def mimeType = mimeTypeEntry.value
+            printText "mimeType: " + mimeTypeEntry.key
+            printText "type: " + mimeType.type
+
+
+        }
+
+    }
+
+    abstract class RecursivePrinter<X,Y> {
+
+        private String levelIndicator = ""
+        private String id
+
+        public RecursivePrinter(String idOfItemToPrint, String levelIndicator) {
+            this.id = idOfItemToPrint
             this.levelIndicator = levelIndicator
         }
 
-        @Override
-        void traverse(Map<String,MimeType> mimeTypes) {//Map<String,MimeType>
+        void traverse(Map<X,Y> items) {
 
-            if(mimeTypes.size() == 0)
+            if (items.size() == 0)
                 return
 
-            println this.levelIndicator + "MIME-TYPEs: "
-            def mimeTypesIterator = mimeTypes.iterator()
-            while(mimeTypesIterator.hasNext()){
-                print mimeTypesIterator.next()
-            }
-        }
+            incrementLevelIndicator()
+            printText id + "s: "
+            def itemsIterator = items.iterator()
 
-        @Override
-        public void print(Map.Entry<String,MimeType> mimeTypeEntry) {
-            def extraLevel = this.levelIndicator + "\t"
-            printInternalProperties(extraLevel, mimeTypeEntry)
+            while (itemsIterator.hasNext())
+                printObject itemsIterator.next()
 
         }
 
-        private void printInternalProperties(String extraLevel, Map.Entry<String,MimeType> mimeTypeEntry) {
-            def mimeType = mimeTypeEntry.value
+        abstract void printObject(Map.Entry<X,Y> itemEntry);
 
-            println extraLevel + "mimeType: " + mimeTypeEntry.key
-            println extraLevel + "type: " + mimeType.type
-
-
+        void printText(String text) {
+            println getLevelIndicator() + text
         }
 
+        String getLevelIndicator() {
+            return levelIndicator
+        }
 
+        private void incrementLevelIndicator() {
+            this.levelIndicator += "\t"
+        }
     }
-
 
 }
 
