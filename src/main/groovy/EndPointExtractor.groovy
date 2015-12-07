@@ -12,107 +12,98 @@ import org.raml.parser.visitor.RamlDocumentBuilder
  */
 class EndPointExtractor {
 
-    public List printEveryResource(Map<String, Resource> resources, Traverser resourceTraverser){
+    public List printEveryResource(Map<String, Resource> resources, RecursivePrinter<String, Resource> recursivePrinter) {
 
-        resourceTraverser.traverse(resources)
-
-        []
-    }
-
-    public static List extractResources(Map<String, Resource> resources) {
-        def resourcesIterator = resources.iterator()
-
-        while(resourcesIterator.hasNext()) {
-            resourcesIterator.next()
-        }
+        recursivePrinter.traverse(resources)
 
         []
     }
 
-    public List extractEndPoints(String filePath) {
-        def resourceIterator = bringResourceIterator(filePath)
-        def arrayOfResources = collectResources(resourceIterator)
+//    public static List extractResources(Map<String, Resource> resources) {
+//        def resourcesIterator = resources.iterator()
+//
+//        while (resourcesIterator.hasNext()) {
+//            resourcesIterator.next()
+//        }
+//
+//        []
+//    }
+//
+//    public List extractEndPoints(String filePath) {
+//        def resourceIterator = bringResourceIterator(filePath)
+//        def arrayOfResources = collectResources(resourceIterator)
+//
+//        arrayOfResources
+//    }
+//
+//    private List collectResources(Iterator<Map.Entry<String, Resource>> resourceIterator) {
+//        def arrayOfResources = []
+//        while (resourceIterator.hasNext()) {
+//            def entry = resourceIterator.next();
+//            arrayOfResources << entry
+//            printResource(entry)
+//        }
+//
+//
+//        arrayOfResources
+//    }
+//
+//    def Iterator<Map.Entry<String, Resource>> bringResourceIterator(String filePath) {
+//
+//        def raml = bringRamlInstance(filePath)
+//        def resources = raml.getResources();
+//
+//        resources.entrySet().iterator()
+//    }
+//
+//    public static void printResource(Map.Entry<String, Resource> resource) {
+//        println "Printing"
+//        println "Key: " + resource.key + ", \t\t\tValue: " + resource.value
+//    }
+//
+//    private Raml bringRamlInstance(String filePath) {
+//        def inputStream = getInputStream filePath
+//        def raml = new RamlDocumentBuilder().build(inputStream, filePath);
+//
+//        raml
+//    }
+//
+//    private static InputStream getInputStream(String resourceLocation) {
+//        return Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
+//    }
 
-        arrayOfResources
-    }
 
-    private List collectResources(Iterator<Map.Entry<String, Resource>> resourceIterator) {
-        def arrayOfResources = []
-        while (resourceIterator.hasNext()){
-            def entry = resourceIterator.next();
-            arrayOfResources << entry
-            printResource(entry)
+    class ResourceMapEntryPrinter extends RecursivePrinter<String, Resource> {
+        
+        public ResourceMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
+            super(idOfItemToPrint, levelIndicator)
+
         }
-
-
-        arrayOfResources
-    }
-
-    def Iterator<Map.Entry<String, Resource>> bringResourceIterator(String filePath) {
-
-        def raml = bringRamlInstance(filePath)
-        def resources = raml.getResources();
-
-        resources.entrySet().iterator()
-    }
-
-    public static void printResource(Map.Entry<String, Resource> resource) {
-        println "Printing"
-        println "Key: " + resource.key + ", \t\t\tValue: " + resource.value
-    }
-
-    private Raml bringRamlInstance(String filePath) {
-        def inputStream = getInputStream filePath
-        def raml = new RamlDocumentBuilder().build(inputStream, filePath);
-
-        raml
-    }
-
-    private static InputStream getInputStream(String resourceLocation) {
-        return Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
-    }
-
-
-    //Internal resources
-
-    interface MapEntryPrinter<X,Y>{
-        void print(Map.Entry<X,Y> object)
-    }
-
-    interface Traverser<X, Y> {
-        public void traverse(Map<X, Y> collection);
-    }
-
-
-    class ResourceMapEntryPrinter implements Traverser<String,Resource>, MapEntryPrinter <String,Resource> {
-
-        private String levelIndicator = "";
 
         @Override
-        public void traverse(Map<String,Resource> resources) {//Map<String, Resource>
+        public void traverse(Map<String, Resource> resources) {//Map<String, Resource>
             def resourcesIterator = resources.iterator()
 
 
-            while(resourcesIterator.hasNext()){
+            while (resourcesIterator.hasNext()) {
 
-                Map.Entry<String, Resource>  resourceEntry = resourcesIterator.next()
-                print resourceEntry
+                Map.Entry<String, Resource> resourceEntry = resourcesIterator.next()
+                printObject resourceEntry
 
-                if(resourceEntry.value.resources.size() > 0){
-                    levelIndicator += "\t"
+                if (resourceEntry.value.resources.size() > 0) {
+                    incrementLevelIndicator()
                     traverse(resourceEntry.value.resources)
+                    decrementLevelIndicator()
                 }
 
-                if(levelIndicator.length() > 0)
-                    levelIndicator = levelIndicator.substring(0, levelIndicator.length() -2)
 
             }
         }
 
         @Override
-        void print(Map.Entry<String, Resource> resourceEntry) {
+        void printObject(Map.Entry<String, Resource> resourceEntry) {
             printInternalProperties(resourceEntry)
-            new ActionMapEntryPrinter(levelIndicator).traverse(resourceEntry.value.actions)
+            new ActionMapEntryPrinter("ACTION", levelIndicator).traverse(resourceEntry.value.actions)
 
             println ""
         }
@@ -133,81 +124,47 @@ class EndPointExtractor {
 
     }
 
-    class ActionMapEntryPrinter implements Traverser<ActionType, Action>, MapEntryPrinter<ActionType, Action> {
+    class ActionMapEntryPrinter extends RecursivePrinter<ActionType, Action> {
 
-        private String levelIndicator;
-
-        ActionMapEntryPrinter(String levelIndicator) {
-            this.levelIndicator = levelIndicator
+        ActionMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
+            super(idOfItemToPrint, levelIndicator)
         }
 
         @Override
-        void traverse(Map<ActionType,Action> actions) {//Map<ActionType, Action>
-
-            if(actions.size() == 0)
-                return
-
-            println this.levelIndicator + "ACTIONs: "
-            def actionsIterator = actions.iterator()
-            while (actionsIterator.hasNext())
-                print actionsIterator.next()
-        }
-
-        @Override
-        public void print(Map.Entry<ActionType, Action> actionEntry) {
-            def extraLevel = this.levelIndicator
-            printInternalProperties(extraLevel, actionEntry)
-            new QueryParamsMapEntryPrinter(extraLevel).traverse(actionEntry.value.queryParameters)
-            new ResponseMapEntryPrinter("RESPONSE", extraLevel).traverse(actionEntry.value.responses)
-
-        }
-
-        private void printInternalProperties(String extraLevel, Map.Entry<ActionType, Action> actionEntry) {
+        public void printObject(Map.Entry<ActionType, Action> actionEntry) {
             def action = actionEntry.value
-            println extraLevel + "--"
-            println extraLevel + "Action: " + actionEntry.key
-            println extraLevel + "Type: " + action.type
-            println extraLevel + "action uri: " + action.baseUriParameters
+            printText "--"
+            printText "Action: " + actionEntry.key
+            printText "Type: " + action.type
+            printText "action uri: " + action.baseUriParameters
+            new QueryParamsMapEntryPrinter("QUERY PARAM", getLevelIndicator()).traverse(actionEntry.value.queryParameters)
+            new ResponseMapEntryPrinter("RESPONSE", getLevelIndicator()).traverse(actionEntry.value.responses)
+
         }
 
 
     }
 
-    class QueryParamsMapEntryPrinter implements Traverser<String,QueryParameter>, MapEntryPrinter<String,QueryParameter> {
+    class QueryParamsMapEntryPrinter extends RecursivePrinter<String, QueryParameter> {
 
         private String levelIndicator;
 
-        QueryParamsMapEntryPrinter(String levelIndicator) {
-            this.levelIndicator = levelIndicator
+        QueryParamsMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
+            super(idOfItemToPrint, levelIndicator)
         }
 
         @Override
-        void traverse(Map<String,QueryParameter> queryParameters) {//Map<String, QueryParameter>
+        public void printObject(Map.Entry<String, QueryParameter> queryParameterEntry) {
 
-            if(queryParameters.size() == 0)
-                return
-
-            println this.levelIndicator + "QUERY PARAMETERs: "
-            def queryParamsIterator = queryParameters.iterator()
-            while(queryParamsIterator.hasNext()){
-                print queryParamsIterator.next()
-            }
-        }
-
-        @Override
-        public void print(Map.Entry<String,QueryParameter> queryParameterEntry) {
-            def extraLevel = this.levelIndicator + "\t"
             def queryParameter = queryParameterEntry.value
-
-            println extraLevel + queryParameterEntry.key
-
-            extraLevel += "\t"
-            println extraLevel + "displayName: " + queryParameter.displayName
-            println extraLevel + "description: " + queryParameter.description
-            println extraLevel + "type: " + queryParameter.type
+            printText queryParameterEntry.key
+            incrementLevelIndicator()
+            printText "displayName: " + queryParameter.displayName
+            printText "description: " + queryParameter.description
+            printText "type: " + queryParameter.type
+            decrementLevelIndicator()
 
         }
-
 
 
     }
@@ -215,7 +172,7 @@ class EndPointExtractor {
 
     class ResponseMapEntryPrinter extends RecursivePrinter<String, Response> {
 
-        ResponseMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
+        public ResponseMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
             super(idOfItemToPrint, levelIndicator)
         }
 
@@ -228,27 +185,22 @@ class EndPointExtractor {
             printText "body: " + response.body
             printText "description: " + response.description
 
-            callMimeTypePrinter(response)
-
-        }
-
-
-        private void callMimeTypePrinter(Response response) {
             def mimeTypes = response.body
             new MimeTypeMapEntryPrinter("Mime Type", getLevelIndicator()).traverse(mimeTypes)
+
         }
 
 
     }
 
-    class MimeTypeMapEntryPrinter extends RecursivePrinter<String,MimeType> {
+    class MimeTypeMapEntryPrinter extends RecursivePrinter<String, MimeType> {
 
         MimeTypeMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
             super(idOfItemToPrint, levelIndicator)
         }
 
         @Override
-        public void printObject(Map.Entry<String,MimeType> mimeTypeEntry) {
+        public void printObject(Map.Entry<String, MimeType> mimeTypeEntry) {
 
             def mimeType = mimeTypeEntry.value
             printText "mimeType: " + mimeTypeEntry.key
@@ -259,7 +211,7 @@ class EndPointExtractor {
 
     }
 
-    abstract class RecursivePrinter<X,Y> {
+    abstract class RecursivePrinter<X, Y> {
 
         private String levelIndicator = ""
         private String id
@@ -269,7 +221,7 @@ class EndPointExtractor {
             this.levelIndicator = levelIndicator
         }
 
-        void traverse(Map<X,Y> items) {
+        void traverse(Map<X, Y> items) {
 
             if (items.size() == 0)
                 return
@@ -283,7 +235,7 @@ class EndPointExtractor {
 
         }
 
-        abstract void printObject(Map.Entry<X,Y> itemEntry);
+        abstract void printObject(Map.Entry<X, Y> itemEntry);
 
         void printText(String text) {
             println getLevelIndicator() + text
@@ -293,12 +245,15 @@ class EndPointExtractor {
             return levelIndicator
         }
 
-        private void incrementLevelIndicator() {
+        public void incrementLevelIndicator() {
             this.levelIndicator += "\t"
         }
+
+        public void decrementLevelIndicator() {
+            if (this.levelIndicator.length() >= 2) {
+                this.levelIndicator = this.levelIndicator.substring(0, this.levelIndicator.length() - 1)
+            }
+        }
+
     }
-
 }
-
-
-
