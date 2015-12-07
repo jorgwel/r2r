@@ -13,7 +13,7 @@ class EndPointsExtractorTests extends Specification {
         expect: numberOfEndPoints == 0
         where: numberOfEndPoints = new EndPointExtractor().printEveryResource(
                                                                 bringRamlInstance("yamlexamples/many_end_points.yaml").getResources(),
-                                                                new EndPointExtractor.ResourcePrinter()
+                                                                new EndPointExtractor.ResourceMapEntryPrinter()
                                                             ).size()
     }
 

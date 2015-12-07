@@ -74,29 +74,16 @@ class EndPointExtractor {
 
     //Internal resources
 
-    interface Printer <T>{
-        void print(T object)
+    interface MapEntryPrinter<X,Y>{
+        void print(Map.Entry<X,Y> object)
     }
 
     interface Traverser<X, Y> {
         public void traverse(Map<X, Y> collection);
     }
 
-    /*interface ResourceTraverser {
-        public void actOnResources(Map<String, Resource> resources);
-    }
 
-    interface ActionTraverser {
-        public void actOnActions(Map<ActionType, Action> actions);
-    }
-
-    interface QueryParametersTraverser {
-        public void actOnActions(Map<ActionType, Action> actions);
-    }
-*/
-
-
-    class ResourcePrinter implements Traverser<String,Resource>, Printer <Resource> {
+    class ResourceMapEntryPrinter implements Traverser<String,Resource>, MapEntryPrinter <String,Resource> {
 
         private String levelIndicator = "";
 
@@ -108,7 +95,7 @@ class EndPointExtractor {
             while(resourcesIterator.hasNext()){
 
                 Map.Entry<String, Resource>  resourceEntry = resourcesIterator.next()
-                print resourceEntry.value
+                print resourceEntry
 
                 if(resourceEntry.value.resources.size() > 0){
                     levelIndicator += "\t"
@@ -122,29 +109,34 @@ class EndPointExtractor {
         }
 
         @Override
-        void print(Resource resource) {
-            printInternalProperties(resource)
-            new ActionPrinter(levelIndicator).traverse(resource.actions)
+        void print(Map.Entry<String, Resource> resourceEntry) {
+            printInternalProperties(resourceEntry)
+            new ActionMapEntryPrinter(levelIndicator).traverse(resourceEntry.value.actions)
 
             println ""
         }
 
-        private void printInternalProperties(Resource resource) {
+        private void printInternalProperties(Map.Entry<String, Resource> resourceEntry) {
+
+            def resource = resourceEntry.value
+
             println levelIndicator + "=RESOURCE : "
+            println levelIndicator + "name: " + resourceEntry.key
             println levelIndicator + "uri: " + resource.uri
             println levelIndicator + "displayName: " + resource.displayName
             println levelIndicator + "description: " + resource.description
             println levelIndicator + "type: " + resource.type
             println levelIndicator + "baseUriParameters: " + resource.baseUriParameters
+
         }
 
     }
 
-    class ActionPrinter implements Traverser<ActionType, Action>, Printer<Action> {
+    class ActionMapEntryPrinter implements Traverser<ActionType, Action>, MapEntryPrinter<ActionType, Action> {
 
         private String levelIndicator;
 
-        ActionPrinter(String levelIndicator) {
+        ActionMapEntryPrinter(String levelIndicator) {
             this.levelIndicator = levelIndicator
         }
 
@@ -157,20 +149,22 @@ class EndPointExtractor {
             println this.levelIndicator + "ACTIONs: "
             def actionsIterator = actions.iterator()
             while (actionsIterator.hasNext())
-                print actionsIterator.next().value
+                print actionsIterator.next()
         }
 
         @Override
-        public void print(Action action) {
+        public void print(Map.Entry<ActionType, Action> actionEntry) {
             def extraLevel = this.levelIndicator
-            printInternalProperties(extraLevel, action)
-            new QueryParamsPrinter(extraLevel).traverse(action.queryParameters)
-            new ResponsePrinter(extraLevel).traverse(action.responses)
+            printInternalProperties(extraLevel, actionEntry)
+            new QueryParamsMapEntryPrinter(extraLevel).traverse(actionEntry.value.queryParameters)
+            new ResponseMapEntryPrinter(extraLevel).traverse(actionEntry.value.responses)
 
         }
 
-        private void printInternalProperties(String extraLevel, Action action) {
+        private void printInternalProperties(String extraLevel, Map.Entry<ActionType, Action> actionEntry) {
+            def action = actionEntry.value
             println extraLevel + "--"
+            println extraLevel + "Action: " + actionEntry.key
             println extraLevel + "Type: " + action.type
             println extraLevel + "action uri: " + action.baseUriParameters
         }
@@ -178,11 +172,11 @@ class EndPointExtractor {
 
     }
 
-    class QueryParamsPrinter implements Traverser<String,QueryParameter>, Printer<QueryParameter> {
+    class QueryParamsMapEntryPrinter implements Traverser<String,QueryParameter>, MapEntryPrinter<String,QueryParameter> {
 
         private String levelIndicator;
 
-        QueryParamsPrinter(String levelIndicator) {
+        QueryParamsMapEntryPrinter(String levelIndicator) {
             this.levelIndicator = levelIndicator
         }
 
@@ -195,19 +189,20 @@ class EndPointExtractor {
             println this.levelIndicator + "QUERY PARAMETERs: "
             def queryParamsIterator = queryParameters.iterator()
             while(queryParamsIterator.hasNext()){
-                print queryParamsIterator.next().value
+                print queryParamsIterator.next()
             }
         }
 
         @Override
-        public void print(QueryParameter queryParameter) {
+        public void print(Map.Entry<String,QueryParameter> queryParameterEntry) {
             def extraLevel = this.levelIndicator + "\t"
-            printInternalProperties(extraLevel, queryParameter)
+            printInternalProperties(extraLevel, queryParameterEntry)
 
         }
 
-        private void printInternalProperties(String extraLevel, QueryParameter queryParameter) {
-            println extraLevel + "name: " + queryParameter
+        private void printInternalProperties(String extraLevel, Map.Entry<String,QueryParameter> queryParameterEntry) {
+            def queryParameter = queryParameterEntry.value
+            println extraLevel + "name: " + queryParameterEntry.key
             println extraLevel + "displayName: " + queryParameter.displayName
             println extraLevel + "description: " + queryParameter.description
             println extraLevel + "type: " + queryParameter.type
@@ -217,11 +212,11 @@ class EndPointExtractor {
     }
 
 
-    class ResponsePrinter implements Traverser<String,Response>, Printer<Response> {
+    class ResponseMapEntryPrinter implements Traverser<String,Response>, MapEntryPrinter<String, Response> {
 
         private String levelIndicator;
 
-        ResponsePrinter(String levelIndicator) {
+        ResponseMapEntryPrinter(String levelIndicator) {
             this.levelIndicator = levelIndicator
         }
 
@@ -234,19 +229,26 @@ class EndPointExtractor {
             println this.levelIndicator + "RESPONSEs: "
             def responsesIterator = responses.iterator()
             while(responsesIterator.hasNext()){
-                print responsesIterator.next().value
+                print responsesIterator.next()
             }
         }
 
         @Override
-        public void print(Response response) {
+        public void print(Map.Entry<String, Response> responseEntry) {
             def extraLevel = this.levelIndicator + "\t"
-            printInternalProperties(extraLevel, response)
+            printInternalProperties(extraLevel, responseEntry)
 
         }
 
-        private void printInternalProperties(String extraLevel, Response response) {
-            println extraLevel + "response: " + response
+        private void printInternalProperties(String extraLevel, Map.Entry<String, Response> responseEntry) {
+            def response = responseEntry.value
+
+            println extraLevel + "status: " + responseEntry.key
+            println extraLevel + "body: " + response.body
+            println extraLevel + "description: " + response.description
+Falta iterador de mime types
+            println extraLevel + "description: " + response.body.iterator().next()
+
         }
 
 
