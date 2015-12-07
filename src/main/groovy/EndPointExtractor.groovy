@@ -1,5 +1,6 @@
 import org.raml.model.Action
 import org.raml.model.ActionType
+import org.raml.model.MimeType
 import org.raml.model.Raml
 import org.raml.model.Resource
 import org.raml.model.Response
@@ -181,7 +182,7 @@ class EndPointExtractor {
         }
 
         @Override
-        void traverse(Map<String,QueryParameter> queryParameters) {//Map<ActionType, Action>
+        void traverse(Map<String,QueryParameter> queryParameters) {//Map<String, QueryParameter>
 
             if(queryParameters.size() == 0)
                 return
@@ -196,17 +197,17 @@ class EndPointExtractor {
         @Override
         public void print(Map.Entry<String,QueryParameter> queryParameterEntry) {
             def extraLevel = this.levelIndicator + "\t"
-            printInternalProperties(extraLevel, queryParameterEntry)
-
-        }
-
-        private void printInternalProperties(String extraLevel, Map.Entry<String,QueryParameter> queryParameterEntry) {
             def queryParameter = queryParameterEntry.value
-            println extraLevel + "name: " + queryParameterEntry.key
+
+            println extraLevel + queryParameterEntry.key
+
+            extraLevel += "\t"
             println extraLevel + "displayName: " + queryParameter.displayName
             println extraLevel + "description: " + queryParameter.description
             println extraLevel + "type: " + queryParameter.type
+
         }
+
 
 
     }
@@ -221,7 +222,7 @@ class EndPointExtractor {
         }
 
         @Override
-        void traverse(Map<String,Response> responses) {//Map<ActionType, Action>
+        void traverse(Map<String,Response> responses) {//Map<String, Response>
 
             if(responses.size() == 0)
                 return
@@ -246,13 +247,55 @@ class EndPointExtractor {
             println extraLevel + "status: " + responseEntry.key
             println extraLevel + "body: " + response.body
             println extraLevel + "description: " + response.description
-Falta iterador de mime types
-            println extraLevel + "description: " + response.body.iterator().next()
+
+            def mimeTypes = response.body
+            new MimeTypeMapEntryPrinter(extraLevel).traverse(mimeTypes)
 
         }
 
 
     }
+
+    class MimeTypeMapEntryPrinter implements Traverser<String,MimeType>, MapEntryPrinter<String,MimeType> {
+
+        private String levelIndicator;
+
+        MimeTypeMapEntryPrinter(String levelIndicator) {
+            this.levelIndicator = levelIndicator
+        }
+
+        @Override
+        void traverse(Map<String,MimeType> mimeTypes) {//Map<String,MimeType>
+
+            if(mimeTypes.size() == 0)
+                return
+
+            println this.levelIndicator + "MIME-TYPEs: "
+            def mimeTypesIterator = mimeTypes.iterator()
+            while(mimeTypesIterator.hasNext()){
+                print mimeTypesIterator.next()
+            }
+        }
+
+        @Override
+        public void print(Map.Entry<String,MimeType> mimeTypeEntry) {
+            def extraLevel = this.levelIndicator + "\t"
+            printInternalProperties(extraLevel, mimeTypeEntry)
+
+        }
+
+        private void printInternalProperties(String extraLevel, Map.Entry<String,MimeType> mimeTypeEntry) {
+            def mimeType = mimeTypeEntry.value
+
+            println extraLevel + "mimeType: " + mimeTypeEntry.key
+            println extraLevel + "type: " + mimeType.type
+
+
+        }
+
+
+    }
+
 
 }
 
