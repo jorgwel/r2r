@@ -5,11 +5,11 @@ import org.raml.model.Resource
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class ResourceMapEntryPrinter extends AbstractRecursivePrinter<String, Resource> {
+class ResourcePrinter extends AbstractRecursivePrinter<String, Resource> {
 
 
 
-    ResourceMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
+    ResourcePrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)
 
     }
@@ -18,27 +18,26 @@ class ResourceMapEntryPrinter extends AbstractRecursivePrinter<String, Resource>
     public void traverse(Map<String, Resource> resources) {//Map<String, Resource>
         def resourcesIterator = resources.iterator()
 
-
+        incrementLevelIndicator()
         while (resourcesIterator.hasNext()) {
 
             Map.Entry<String, Resource> resourceEntry = resourcesIterator.next()
             printObject resourceEntry
 
-            if (resourceEntry.value.resources.size() > 0) {
-                incrementLevelIndicator()
+            if (resourceEntry.value.resources.size() > 0)
                 traverse(resourceEntry.value.resources)
-                decrementLevelIndicator()
-            }
-
 
         }
+        decrementLevelIndicator()
     }
 
     @Override
     void printObject(Map.Entry<String, Resource> resourceEntry) {
         printInternalProperties(resourceEntry)
-        new ActionMapEntryPrinter("ACTION", levelIndicator).traverse(resourceEntry.value.actions)
-
+        new ActionPrinter("ACTION", levelIndicator).traverse(resourceEntry.value.actions)
+        new UriParametersPrinter("URI PARAMETER", levelIndicator).traverse(resourceEntry.value.uriParameters)
+        new UriParametersPrinter("BASE URI PARAMETER", levelIndicator).traverse(resourceEntry.value.baseUriParameters)
+        new UriParametersPrinter("RESOLVED URI PARAMETER", levelIndicator).traverse(resourceEntry.value.resolvedUriParameters)
         println ""
     }
 
@@ -47,13 +46,12 @@ class ResourceMapEntryPrinter extends AbstractRecursivePrinter<String, Resource>
         def resource = resourceEntry.value
 
         println levelIndicator + "=RESOURCE : "
-        println levelIndicator + "name: " + resourceEntry.key
         println levelIndicator + "uri: " + resource.uri
+        println levelIndicator + "name: " + resourceEntry.key
+        println levelIndicator + "relativeUri: " + resource.relativeUri
         println levelIndicator + "displayName: " + resource.displayName
         println levelIndicator + "description: " + resource.description
         println levelIndicator + "type: " + resource.type
-        println levelIndicator + "baseUriParameters: " + resource.baseUriParameters
-        println levelIndicator + "uriParameters: " + resource.uriParameters
 
 
     }

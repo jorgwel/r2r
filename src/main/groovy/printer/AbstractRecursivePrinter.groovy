@@ -21,12 +21,13 @@ abstract class AbstractRecursivePrinter<X, Y> {
         if (items.size() == 0)
             return
 
-        incrementLevelIndicator()
+//        incrementLevelIndicator()
         printText id + "s: "
         def itemsIterator = items.iterator()
-
+        incrementLevelIndicator()
         while (itemsIterator.hasNext())
             printObject itemsIterator.next()
+        decrementLevelIndicator()
 
     }
 

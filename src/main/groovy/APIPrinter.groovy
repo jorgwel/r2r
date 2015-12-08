@@ -1,26 +1,26 @@
-import org.raml.model.Action
-import org.raml.model.ActionType
-import org.raml.model.MimeType
 import org.raml.model.Raml
-import org.raml.model.Resource
-import org.raml.model.Response
-import org.raml.model.parameter.QueryParameter
 import org.raml.parser.visitor.RamlDocumentBuilder
-import printer.RecursivePrinter
+import printer.ResourcePrinter
 
 /**
  * Created by jorge.bautista on 4/12/15.
  */
 class APIPrinter {
 
-    APIPrinter() {
+    def printEveryResource(String ramlFilePath) {
+        def ramlDocumentInstance = bringRamlInstance("yamlexamples/many_end_points.yaml")
+        def recursivePrinter = new ResourcePrinter("RESOURCE", "")
+        recursivePrinter.traverse(ramlDocumentInstance.resources)
+        1
     }
 
-    public List printEveryResource(Map<String, Resource> resources, RecursivePrinter<String, Resource> recursivePrinter) {
+    private Raml bringRamlInstance(String filePath) {
+        def inputStream = getInputStream filePath
+        new RamlDocumentBuilder().build inputStream, filePath
+    }
 
-        recursivePrinter.traverse(resources)
-
-        []
+    private static InputStream getInputStream(String resourceLocation) {
+        return Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
     }
 
 

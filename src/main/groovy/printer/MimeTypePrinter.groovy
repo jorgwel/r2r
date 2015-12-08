@@ -5,9 +5,9 @@ import org.raml.model.MimeType
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class MimeTypeMapEntryPrinter extends AbstractRecursivePrinter<String, MimeType> {
+class MimeTypePrinter extends AbstractRecursivePrinter<String, MimeType> {
 
-    MimeTypeMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
+    MimeTypePrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)
     }
 
