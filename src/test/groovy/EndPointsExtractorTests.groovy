@@ -1,5 +1,6 @@
 import org.raml.model.Raml
 import org.raml.parser.visitor.RamlDocumentBuilder
+import printer.ResourceMapEntryPrinter
 import spock.lang.Specification
 
 /**
@@ -9,11 +10,10 @@ class EndPointsExtractorTests extends Specification {
 
 
     def "iterateOverResources"() {
-
         expect: numberOfEndPoints == 0
         where: numberOfEndPoints = new EndPointExtractor().printEveryResource(
                                                                 bringRamlInstance("yamlexamples/many_end_points.yaml").getResources(),
-                                                                new EndPointExtractor.ResourceMapEntryPrinter(null, "RESOURCE", "")
+                                                                new ResourceMapEntryPrinter("RESOURCE", "")
                                                             ).size()
     }
 
