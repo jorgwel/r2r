@@ -18,7 +18,7 @@ class ActionPrinter extends AbstractRecursivePrinter<ActionType, Action> {
         printText "--"
         printText "Action: " + actionEntry.key
         printText "Type: " + action.type
-        printText "action uri: " + action.baseUriParameters
+        printText "Description: " + action.description
         new QueryParamsPrinter("QUERY PARAM", getLevelIndicator()).traverse(actionEntry.value.queryParameters)
         new ResponsePrinter("RESPONSE", getLevelIndicator()).traverse(actionEntry.value.responses)
 

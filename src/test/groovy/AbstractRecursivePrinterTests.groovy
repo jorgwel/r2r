@@ -5,7 +5,7 @@ import spock.lang.Specification
 /**
  * Created by jorge.bautista on 4/12/15.
  */
-class EndPointsExtractorTests extends Specification {
+class AbstractRecursivePrinterTests extends Specification {
 
 
     def "iterateOverResources"() {

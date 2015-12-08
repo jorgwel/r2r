@@ -33,15 +33,19 @@ class ResourcePrinter extends AbstractRecursivePrinter<String, Resource> {
 
     @Override
     void printObject(Map.Entry<String, Resource> resourceEntry) {
-        printInternalProperties(resourceEntry)
+        printSingleProperties(resourceEntry)
+        printCollections(resourceEntry)
+        println ""
+    }
+
+    private void printCollections(Map.Entry<String, Resource> resourceEntry) {
         new ActionPrinter("ACTION", levelIndicator).traverse(resourceEntry.value.actions)
         new UriParametersPrinter("URI PARAMETER", levelIndicator).traverse(resourceEntry.value.uriParameters)
         new UriParametersPrinter("BASE URI PARAMETER", levelIndicator).traverse(resourceEntry.value.baseUriParameters)
         new UriParametersPrinter("RESOLVED URI PARAMETER", levelIndicator).traverse(resourceEntry.value.resolvedUriParameters)
-        println ""
     }
 
-    private void printInternalProperties(Map.Entry<String, Resource> resourceEntry) {
+    private void printSingleProperties(Map.Entry<String, Resource> resourceEntry) {
 
         def resource = resourceEntry.value
 
