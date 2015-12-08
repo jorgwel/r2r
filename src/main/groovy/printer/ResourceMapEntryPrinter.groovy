@@ -5,7 +5,7 @@ import org.raml.model.Resource
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class ResourceMapEntryPrinter extends RecursivePrinter<String, Resource> {
+class ResourceMapEntryPrinter extends AbstractRecursivePrinter<String, Resource> {
 
 
 
@@ -53,6 +53,8 @@ class ResourceMapEntryPrinter extends RecursivePrinter<String, Resource> {
         println levelIndicator + "description: " + resource.description
         println levelIndicator + "type: " + resource.type
         println levelIndicator + "baseUriParameters: " + resource.baseUriParameters
+        println levelIndicator + "uriParameters: " + resource.uriParameters
+
 
     }
 

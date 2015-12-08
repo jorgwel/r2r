@@ -1,12 +1,11 @@
 package printer
 
-import org.raml.model.Response
 import org.raml.model.parameter.QueryParameter
 
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class QueryParamsMapEntryPrinter extends RecursivePrinter<String, QueryParameter> {
+class QueryParamsMapEntryPrinter extends AbstractRecursivePrinter<String, QueryParameter> {
 
     private String levelIndicator;
 

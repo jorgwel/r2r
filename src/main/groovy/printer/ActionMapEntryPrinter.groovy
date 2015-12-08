@@ -6,7 +6,7 @@ import org.raml.model.ActionType
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class ActionMapEntryPrinter extends RecursivePrinter<ActionType, Action> {
+class ActionMapEntryPrinter extends AbstractRecursivePrinter<ActionType, Action> {
 
     ActionMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)
@@ -19,8 +19,8 @@ class ActionMapEntryPrinter extends RecursivePrinter<ActionType, Action> {
         printText "Action: " + actionEntry.key
         printText "Type: " + action.type
         printText "action uri: " + action.baseUriParameters
-        new QueryParamsMapEntryPrinter("QUERY PARAM", getLevelIndicator()).traverse(actionEntry.value.queryParameters)
-        new ResponseMapEntryPrinter("RESPONSE", getLevelIndicator()).traverse(actionEntry.value.responses)
+        new QueryParamsMapEntryPrinterAbstract("QUERY PARAM", getLevelIndicator()).traverse(actionEntry.value.queryParameters)
+        new ResponseMapEntryPrinterAbstract("RESPONSE", getLevelIndicator()).traverse(actionEntry.value.responses)
 
     }
 

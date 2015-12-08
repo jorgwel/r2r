@@ -6,7 +6,7 @@ import org.raml.model.Response
  * Created by jorge.bautista on 7/12/15.
  */
 
-class ResponseMapEntryPrinter extends RecursivePrinter<String, Response> {
+class ResponseMapEntryPrinter extends AbstractRecursivePrinter<String, Response> {
 
     public ResponseMapEntryPrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)

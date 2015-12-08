@@ -11,9 +11,9 @@ import printer.RecursivePrinter
 /**
  * Created by jorge.bautista on 4/12/15.
  */
-class EndPointExtractor {
+class APIPrinter {
 
-    EndPointExtractor() {
+    APIPrinter() {
     }
 
     public List printEveryResource(Map<String, Resource> resources, RecursivePrinter<String, Resource> recursivePrinter) {
