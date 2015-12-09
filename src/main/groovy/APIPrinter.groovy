@@ -18,7 +18,7 @@ class APIPrinter {
         new RamlDocumentBuilder().build inputStream, filePath
     }
 
-    private static InputStream getInputStream(String resourceLocation) {
+    private InputStream getInputStream(String resourceLocation) {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
     }
 
