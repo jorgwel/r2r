@@ -7,11 +7,10 @@ import printer.ResourcePrinter
  */
 class APIPrinter {
 
-    def printEveryResource(String ramlFilePath) {
-        def ramlDocumentInstance = bringRamlInstance("yamlexamples/many_end_points.yaml")
+    def printResources(String ramlFilePath) {
+        def ramlDocumentInstance = bringRamlInstance(ramlFilePath)
         def recursivePrinter = new ResourcePrinter("RESOURCE", "")
         recursivePrinter.traverse(ramlDocumentInstance.resources)
-        1
     }
 
     private Raml bringRamlInstance(String filePath) {

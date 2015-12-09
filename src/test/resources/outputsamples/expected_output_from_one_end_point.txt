@@ -1,0 +1,8 @@
+    =RESOURCE : 
+    uri: /users
+    name: /users
+    relativeUri: /users
+    displayName: Usuarios del sistema
+    description: null
+    type: null
+

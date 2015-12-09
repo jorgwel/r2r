@@ -4,7 +4,7 @@ package printer
  * Created by jorge.bautista on 7/12/15.
  */
 abstract class AbstractRecursivePrinter<X, Y> {
-
+    private String levelConstant = "    "
     private String levelIndicator = ""
     private String id
 
@@ -23,7 +23,6 @@ abstract class AbstractRecursivePrinter<X, Y> {
         if (items.size() == 0)
             return
 
-//        incrementLevelIndicator()
         printText id + "s: "
         def itemsIterator = items.iterator()
         incrementLevelIndicator()
@@ -44,12 +43,12 @@ abstract class AbstractRecursivePrinter<X, Y> {
     }
 
     public void incrementLevelIndicator() {
-        this.levelIndicator += "\t"
+        this.levelIndicator += this.levelConstant
     }
 
     public void decrementLevelIndicator() {
-        if (this.levelIndicator.length() >= 2) {
-            this.levelIndicator = this.levelIndicator.substring(0, this.levelIndicator.length() - 1)
+        if (this.levelIndicator.length() >= 4) {
+            this.levelIndicator = this.levelIndicator.substring(0, this.levelIndicator.length() - 4)
         }
     }
 

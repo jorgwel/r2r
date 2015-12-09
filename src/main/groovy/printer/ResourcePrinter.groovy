@@ -7,8 +7,6 @@ import org.raml.model.Resource
  */
 class ResourcePrinter extends AbstractRecursivePrinter<String, Resource> {
 
-
-
     ResourcePrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)
 

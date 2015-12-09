@@ -1,0 +1,155 @@
+    =RESOURCE : 
+    uri: /users
+    name: /users
+    relativeUri: /users
+    displayName: null
+    description: null
+    type: null
+
+        =RESOURCE : 
+        uri: /users/authors
+        name: /authors
+        relativeUri: /authors
+        displayName: null
+        description: null
+        type: null
+
+            =RESOURCE : 
+            uri: /users/authors/{authorname}
+            name: /{authorname}
+            relativeUri: /{authorname}
+            displayName: null
+            description: null
+            type: null
+
+        =RESOURCE : 
+        uri: /users/books
+        name: /books
+        relativeUri: /books
+        displayName: null
+        description: null
+        type: null
+        ACTIONs: 
+            --
+            Action: GET
+            Type: GET
+            Description: null
+            --
+            Action: PUT
+            Type: PUT
+            Description: null
+            --
+            Action: POST
+            Type: POST
+            Description: null
+
+            =RESOURCE : 
+            uri: /users/books/{booktitle}
+            name: /{booktitle}
+            relativeUri: /{booktitle}
+            displayName: null
+            description: null
+            type: null
+            ACTIONs: 
+                --
+                Action: GET
+                Type: GET
+                Description: Retrieve a specific book title
+                QUERY PARAMs: 
+                    --
+                    name: author
+                    displayName: Author
+                    description: An author's full name
+                    type: STRING
+                    required: false
+                    --
+                    name: publicationYear
+                    displayName: Pub Year
+                    description: The year released for the first time in the US
+                    type: NUMBER
+                    required: false
+                    --
+                    name: rating
+                    displayName: Rating
+                    description: Average rating (1-5) submitted by users
+                    type: NUMBER
+                    required: false
+                    --
+                    name: isbn
+                    displayName: ISBN
+                    description: null
+                    type: STRING
+                    required: false
+                RESPONSEs: 
+                    status: 200
+                    body: [application/json:MimeType{type='application/json'}]
+                    description: null
+                    Mime Types: 
+                        mimeType: application/json
+                        type: application/json
+                        schema: null
+                        Body: null
+                --
+                Action: PUT
+                Type: PUT
+                Description: null
+                QUERY PARAMs: 
+                    --
+                    name: access_token
+                    displayName: Access Token
+                    description: Token giving you permission to make call
+                    type: STRING
+                    required: true
+                --
+                Action: DELETE
+                Type: DELETE
+                Description: null
+            URI PARAMETERs: 
+                Name: booktitle
+                Type: STRING
+            RESOLVED URI PARAMETERs: 
+                Name: booktitle
+                Type: STRING
+
+                =RESOURCE : 
+                uri: /users/books/{booktitle}/{author}
+                name: /{author}
+                relativeUri: /{author}
+                displayName: null
+                description: null
+                type: null
+                ACTIONs: 
+                    --
+                    Action: GET
+                    Type: GET
+                    Description: null
+                URI PARAMETERs: 
+                    Name: author
+                    Type: STRING
+                RESOLVED URI PARAMETERs: 
+                    Name: author
+                    Type: STRING
+                    Name: booktitle
+                    Type: STRING
+
+                =RESOURCE : 
+                uri: /users/books/{booktitle}/{publisher}
+                name: /{publisher}
+                relativeUri: /{publisher}
+                displayName: null
+                description: null
+                type: null
+                ACTIONs: 
+                    --
+                    Action: GET
+                    Type: GET
+                    Description: null
+                URI PARAMETERs: 
+                    Name: publisher
+                    Type: STRING
+                RESOLVED URI PARAMETERs: 
+                    Name: booktitle
+                    Type: STRING
+                    Name: publisher
+                    Type: STRING
+

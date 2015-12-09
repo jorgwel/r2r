@@ -12,8 +12,15 @@ class DomainExtractorTest extends Specification {
 //
 //    }
 
-    def "SayHello"() {
-        expect: hello == "Hello Groovy"
-        where: hello = new DomainExtractor().sayHello()
+    def "Print RAML"() {
+
+        when:
+            def pathOfRamlFile = "ramlexamples/many_end_points.raml"
+            new APIPrinter().printResources(pathOfRamlFile)
+
+        then:
+            true
+
     }
+    
 }
