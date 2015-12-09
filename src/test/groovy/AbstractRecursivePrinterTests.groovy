@@ -16,7 +16,7 @@ class AbstractRecursivePrinterTests extends Specification {
         /*
         * Since this AbstractRecursivePrinterTests is in charge of print, 
         * we should have some place where to validate printed text
-        * Note: also check out the cleanup method
+        * Note: also check out the cleanup() method
         */
         oldOut = System.out
         oldErr = System.err
@@ -31,13 +31,13 @@ class AbstractRecursivePrinterTests extends Specification {
     
     def "Text from one end point"() {
         when:
-        def pathOfSampleOutputFile = "outputsamples/expected_output_from_one_end_point.txt"
-        def expectedOutput = getTextFromFile(pathOfSampleOutputFile)
-        def pathOfRamlFile = "ramlexamples/one_end_point.raml"
-        new APIPrinter().printResources(pathOfRamlFile)
+            def pathOfSampleOutputFile = "outputsamples/expected_output_from_one_end_point.txt"
+            def expectedOutput = getTextFromFile(pathOfSampleOutputFile)
+            def pathOfRamlFile = "ramlexamples/one_end_point.raml"
+            new APIPrinter().printResources(pathOfRamlFile)
 
         then:
-        expectedOutput == outContent.toString()
+            expectedOutput == outContent.toString()
     }
 
     def "Text from many end points"() {
