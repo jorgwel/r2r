@@ -17,6 +17,10 @@ class MimeTypePrinter extends AbstractRecursivePrinter<String, MimeType> {
         def mimeType = mimeTypeEntry.value
         printText "mimeType: " + mimeTypeEntry.key
         printText "type: " + mimeType.type
+        printText "schema: " + mimeType.schema
+        printText "Body: " + mimeType.getFormParameters()
+
+        new FormParametersPrinter("FORM PARAMETER", getLevelIndicator()).traverse(mimeTypeEntry.value.formParameters)
 
 
     }

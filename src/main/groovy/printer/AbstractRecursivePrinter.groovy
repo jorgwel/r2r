@@ -17,6 +17,8 @@ abstract class AbstractRecursivePrinter<X, Y> {
     }
 
     void traverse(Map<X, Y> items) {
+        if(items == null)
+            items = Collections.emptyMap()
 
         if (items.size() == 0)
             return

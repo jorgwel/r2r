@@ -13,6 +13,11 @@ class AbstractRecursivePrinterTests extends Specification {
         where: instance = new APIPrinter().printEveryResource("yamlexamples/many_end_points.yaml")
     }
 
+    def "Consider schemas"() {
+        expect: true
+        where: numberOfEndPoints = new APIPrinter().printEveryResource("yamlexamples/using_schemas.yaml")
+    }
+
     def "Get First Level End Points"() {
         expect: numberOfEndPoints == 1
         where: numberOfEndPoints = new APIPrinter().extractEndPoints("yamlexamples/one_end_point.yaml").size()

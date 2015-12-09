@@ -7,6 +7,7 @@
 	Actions --> QueryParameters: have
 	Actions --> Responses: have
 	Responses --> MimeType: have
+	MimeType --> FormParameters: have
 
 	package "Some Group" {
 		HTTP - [First Component]

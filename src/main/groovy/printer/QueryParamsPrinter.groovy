@@ -20,6 +20,7 @@ class QueryParamsPrinter extends AbstractRecursivePrinter<String, QueryParameter
         printText "displayName: " + queryParameter.displayName
         printText "description: " + queryParameter.description
         printText "type: " + queryParameter.type
+        printText "required: " + queryParameter.required
 
     }
 
