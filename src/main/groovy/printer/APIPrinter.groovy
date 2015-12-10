@@ -1,3 +1,5 @@
+package printer
+
 import org.raml.model.Raml
 import org.raml.parser.visitor.RamlDocumentBuilder
 import printer.ResourcePrinter

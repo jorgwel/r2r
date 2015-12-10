@@ -1,10 +1,6 @@
-import org.raml.model.Raml
-import org.raml.parser.visitor.RamlDocumentBuilder
+import printer.APIPrinter
 import spock.lang.Specification
 
-/**
- * Created by jorge.bautista on 4/12/15.
- */
 class AbstractRecursivePrinterTests extends Specification {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
