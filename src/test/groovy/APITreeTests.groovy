@@ -25,7 +25,7 @@ class APITreeTests extends Specification{
         expect: listOfResources != null 
     }
 
-    def "If we want to collect without an assigned path name, an exception is raised"(){
+    def "If we want to collect without an assigned path name, a FileNotSpecified exception is raised"(){
         setup:
             def apiTree = new APITree()
 
@@ -33,12 +33,10 @@ class APITreeTests extends Specification{
             apiTree.fillTree()
 
         then:
-            thrown APITree.NotRAMLFileDefinedYet
+            thrown APITree.FileNotSpecified
     }
 
-    def "If we want to collect with an inexistant file"(){
-
-
+    def "If we pass an inexistant file, a NotExistingFile exception is raised"(){
         setup:
             def apiTree = new APITree("file_doesnt_exists.txt")
 
@@ -46,9 +44,30 @@ class APITreeTests extends Specification{
             apiTree.fillTree()
 
         then:
-            thrown APITree.NotExistantFile
+            thrown APITree.FileDoesNotExist
+    }
+
+    def "If we pass an invalid RAML file, an InvalidRamlFile exception is raised"(){
+        setup:
+            def apiTree = new APITree("ramlexamples/invalid.raml")
+
+        when:
+            apiTree.fillTree()
+
+        then:
+            thrown APITree.InvalidRamlFile
+    }
+
+    def "Passing a valid file with 1 resource returns LinkedList with 1 resource inside"(){
+        setup:
+            def apiTree = new APITree("ramlexamples/one_end_point.raml")
+
+        when:
+            apiTree.fillTree()
+
+        then:
+            apiTree.resources.size() == 1
     }
 
 
-    
 }

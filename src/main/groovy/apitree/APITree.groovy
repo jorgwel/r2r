@@ -1,9 +1,12 @@
 package apitree
 
+import org.raml.parser.visitor.RamlValidationService
+import util.Util
+
 class APITree {
 
     def resources
-    def filePath = ""
+    def filePath
 
     APITree(filePath) {
         this.resources = [] as LinkedList
@@ -11,33 +14,45 @@ class APITree {
     }
 
     def fillTree() {
-        validateFile()
+        validateRamlFile()
+        
     }
 
-    def validateFile() {
-
-        if(filePath.isEmpty())
-            throw new NotRAMLFileDefinedYet()
-
-        File f = new File(filePath);
-        if(!f.exists()) {
-            println "Exiwte"
-            throw new NotExistantFile()
-        }
-
-        return true
-
+    def validateRamlFile() {
+        if (filePath.isEmpty())
+            throw new FileNotSpecified()
+        if (!getFile().exists())
+            throw new FileDoesNotExist(getFile().absolutePath)
+        if (!isValid(filePath))
+            throw new InvalidRamlFile(filePath)
     }
 
-    static class NotRAMLFileDefinedYet extends RuntimeException{
-        NotRAMLFileDefinedYet() {
+    def File getFile() {
+        def fullPath = Util.getAbsolutePathFromFileName(filePath)
+        new File(fullPath);
+    }
+
+    def isValid(fileRelativePath) {
+        def validationErrors = RamlValidationService.createDefault().validate(fileRelativePath)
+        validationErrors.size() == 0
+    }
+
+    static class FileNotSpecified extends RuntimeException{
+        FileNotSpecified() {
             super("No RAML file has been set yet")
         }
     }
 
-    static class NotExistantFile extends RuntimeException{
-        NotExistantFile(filePath) {
+    static class FileDoesNotExist extends RuntimeException{
+        FileDoesNotExist(filePath) {
             super("The provided path does not exist: " + filePath)
+            println "The provided path does not exist: " + filePath
+        }
+    }
+
+    static class InvalidRamlFile extends RuntimeException{
+        InvalidRamlFile(filePath) {
+            super("The provided path does not corresponds to a valid raml file: " + filePath)
         }
     }
 }
