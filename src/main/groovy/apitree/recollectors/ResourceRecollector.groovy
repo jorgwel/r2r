@@ -1,10 +1,5 @@
 package apitree.recollectors
 
-import org.raml.model.Resource
-import printer.AbstractRecursivePrinter
-import printer.ActionPrinter
-import printer.UriParametersPrinter
-
 class ResourceRecollector  {
 
     ResourceRecollector(String idOfItemToPrint, String levelIndicator) {

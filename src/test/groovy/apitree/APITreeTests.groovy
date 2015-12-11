@@ -1,3 +1,5 @@
+package apitree
+
 import apitree.APITree
 import spock.lang.Specification
 import validation.APIFileValidator

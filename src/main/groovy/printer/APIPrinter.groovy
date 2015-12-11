@@ -2,7 +2,7 @@ package printer
 
 import org.raml.model.Raml
 import org.raml.parser.visitor.RamlDocumentBuilder
-import printer.ResourcePrinter
+import printer.specialists.ResourcePrinter
 
 /**
  * Created by jorge.bautista on 4/12/15.

@@ -1,3 +1,5 @@
+package util
+
 import spock.lang.Specification
 import util.Util
 

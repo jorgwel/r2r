@@ -1,3 +1,5 @@
+package apitree.apiitems
+
 import apitree.apiitems.Resource
 import spock.lang.Specification
 

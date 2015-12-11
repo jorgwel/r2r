@@ -1,7 +1,8 @@
-package printer;
+package printer.specialists;
 
 import org.raml.model.MimeType
 import org.raml.model.parameter.UriParameter
+import printer.AbstractRecursivePrinter
 
 /**
  * Created by jorge.bautista on 7/12/15.

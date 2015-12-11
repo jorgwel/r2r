@@ -1,3 +1,5 @@
+package printer
+
 import printer.APIPrinter
 import spock.lang.Specification
 
@@ -10,7 +12,7 @@ class AbstractRecursivePrinterTests extends Specification {
     
     void setup() {
         /*
-        * Since this AbstractRecursivePrinterTests is in charge of print, 
+        * Since this printer.AbstractRecursivePrinterTests is in charge of print, 
         * we should have some place where to validate printed text
         * Note: also check out the cleanup() method
         */
