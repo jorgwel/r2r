@@ -3,6 +3,7 @@ package printer
 import org.raml.model.Raml
 import org.raml.parser.visitor.RamlDocumentBuilder
 import printer.specialists.ResourcePrinter
+import util.Util
 
 /**
  * Created by jorge.bautista on 4/12/15.
@@ -10,19 +11,12 @@ import printer.specialists.ResourcePrinter
 class APIPrinter {
 
     def printResources(String ramlFilePath) {
-        def ramlDocumentInstance = bringRamlInstance(ramlFilePath)
+        def ramlDocumentInstance = Util.bringRamlInstance(ramlFilePath)
         def recursivePrinter = new ResourcePrinter("RESOURCE", "")
         recursivePrinter.traverse(ramlDocumentInstance.resources)
     }
 
-    private Raml bringRamlInstance(String filePath) {
-        def inputStream = getInputStream filePath
-        new RamlDocumentBuilder().build inputStream, filePath
-    }
 
-    private InputStream getInputStream(String resourceLocation) {
-        return Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
-    }
 
 
 
