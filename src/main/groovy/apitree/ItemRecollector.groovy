@@ -1,14 +1,14 @@
 package apitree
 
-abstract class AbstractItemCollector<X, Y> {
+abstract class ItemRecollector<X, Y> {
     private String levelConstant = "    "
     private String levelIndicator = ""
     private String id
 
-    public AbstractItemCollector() {
+    public ItemRecollector() {
     }
 
-    public AbstractItemCollector(String idOfItemToPrint, String levelIndicator) {
+    public ItemRecollector(String idOfItemToPrint, String levelIndicator) {
         this.id = idOfItemToPrint
         this.levelIndicator = levelIndicator
     }

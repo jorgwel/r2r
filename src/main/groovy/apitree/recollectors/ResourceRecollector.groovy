@@ -1,16 +1,13 @@
-package apitree
+package apitree.recollectors
 
 import org.raml.model.Resource
 import printer.AbstractRecursivePrinter
 import printer.ActionPrinter
 import printer.UriParametersPrinter
 
-/**
- * Created by jorge.bautista on 7/12/15.
- */
-class ResourceCollector extends AbstractRecursivePrinter<String, Resource> {
+class ResourceRecollector extends AbstractRecursivePrinter<String, Resource> {
 
-    ResourceCollector(String idOfItemToPrint, String levelIndicator) {
+    ResourceRecollector(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)
 
     }

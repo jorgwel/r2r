@@ -27,6 +27,9 @@ class UtilTests extends Specification{
             stringPath.endsWith(relativePath)
             
     }
+    
+    
+//    bringRamlInstance
 
     def getFile(String findableFilePath) {
         URL url = Thread.currentThread().getContextClassLoader().getResource(findableFilePath)
