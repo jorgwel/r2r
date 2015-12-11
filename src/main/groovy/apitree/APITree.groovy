@@ -1,5 +1,6 @@
 package apitree
 
+import apitree.recollectors.ResourceRecollector
 import validation.APIFileValidator
 
 class APITree {
@@ -19,9 +20,14 @@ class APITree {
     def fillTree() {
         def apiValidator = new APIFileValidator(this.relativePathOfApiDescriptorFile)
         apiValidator.validateRamlFile()
+        //collectResources()
         
 //        def apiPrinter = new APIPrinter()
 //        apiPrinter.printResources(this.relativePathOfApiDescriptorFile)
     }
-
+    
+//    def collectResources() {
+//        ResourceRecollector resourceRecollector = new ResourceRecollector()
+//        def resources = resourceRecollector.recollect(resourcesContainer)
+//    }
 }
