@@ -28,12 +28,6 @@ class UtilTests extends Specification{
             
     }
 
-//    def static Raml bringRamlInstance(String filePath) {
-//        def inputStream = getInputStream filePath
-//        new RamlDocumentBuilder().build inputStream, filePath
-//    }
-
-
     def "Throws an FileNotDefined when the file is NULL"() {
         when:
             Util.bringRamlInstance(null)

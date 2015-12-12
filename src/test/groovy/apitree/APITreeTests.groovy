@@ -6,14 +6,6 @@ import validation.APIFileValidator
 
 class APITreeTests extends Specification{
 
-    void setup() {
-        
-    }
-
-    void cleanup() {
-        
-    }
-
     def "APITree class exists"() {
 
         APITree instance = APITree.class.newInstance()
