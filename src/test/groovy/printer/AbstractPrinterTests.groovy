@@ -1,17 +1,19 @@
 package printer
 
 import spock.lang.Specification
+import util.TestUtilities
 
-class AbstractPrinterTests extends Specification{
+class AbstractPrinterTests extends AbstractTextPrintingTests {
 
     def "AbstractRecursivePrinterTests instantiation"(){
         when:
+            def expectedOutput = TestUtilities.getTextFromFile("outputsamples/expected_output_with_colors_example.txt")
 
             def recursivePrinter = getAbstractPrinterImplementation()
             def parameter = ['color':'Blue', 'shape':'Circle'] as Map
             recursivePrinter.traverse(parameter)
         then:
-            println "recursivePrinter: " + recursivePrinter
+            expectedOutput == getPrintedContent().toString()
 
     }
 

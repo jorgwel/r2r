@@ -1,0 +1,3 @@
+COLORs: 
+mapEntry: color=Blue
+mapEntry: shape=Circle
