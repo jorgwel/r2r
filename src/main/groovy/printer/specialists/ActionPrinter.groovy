@@ -2,12 +2,12 @@ package printer.specialists
 
 import org.raml.model.Action
 import org.raml.model.ActionType
-import printer.AbstractRecursivePrinter
+import printer.AbstractPrinter
 
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class ActionPrinter extends AbstractRecursivePrinter<ActionType, Action> {
+class ActionPrinter extends AbstractPrinter<ActionType, Action> {
 
     ActionPrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)

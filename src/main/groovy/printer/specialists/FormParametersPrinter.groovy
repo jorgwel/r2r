@@ -1,13 +1,12 @@
-package printer.specialists;
+package printer.specialists
 
-import org.raml.model.MimeType
 import org.raml.model.parameter.FormParameter
-import printer.AbstractRecursivePrinter
+import printer.AbstractPrinter
 
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class FormParametersPrinter extends AbstractRecursivePrinter<String, FormParameter> {
+class FormParametersPrinter extends AbstractPrinter<String, FormParameter> {
 
     FormParametersPrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)

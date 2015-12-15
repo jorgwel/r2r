@@ -1,12 +1,12 @@
 package printer.specialists;
 
 import org.raml.model.MimeType
-import printer.AbstractRecursivePrinter
+import printer.AbstractPrinter
 
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class MimeTypePrinter extends AbstractRecursivePrinter<String, MimeType> {
+class MimeTypePrinter extends AbstractPrinter<String, MimeType> {
 
     MimeTypePrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)

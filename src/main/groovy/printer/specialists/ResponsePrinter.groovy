@@ -1,13 +1,13 @@
 package printer.specialists
 
 import org.raml.model.Response
-import printer.AbstractRecursivePrinter
+import printer.AbstractPrinter
 
 /**
  * Created by jorge.bautista on 7/12/15.
  */
 
-class ResponsePrinter extends AbstractRecursivePrinter<String, Response> {
+class ResponsePrinter extends AbstractPrinter<String, Response> {
 
     public ResponsePrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)

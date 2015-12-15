@@ -1,12 +1,12 @@
 package printer.specialists
 
 import org.raml.model.parameter.QueryParameter
-import printer.AbstractRecursivePrinter
+import printer.AbstractPrinter
 
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class QueryParamsPrinter extends AbstractRecursivePrinter<String, QueryParameter> {
+class QueryParamsPrinter extends AbstractPrinter<String, QueryParameter> {
 
     QueryParamsPrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)

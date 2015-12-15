@@ -1,12 +1,12 @@
 package printer.specialists
 
 import org.raml.model.Resource
-import printer.AbstractRecursivePrinter
+import printer.AbstractPrinter
 
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class ResourcePrinter extends AbstractRecursivePrinter<String, Resource> {
+class ResourcePrinter extends AbstractPrinter<String, Resource> {
 
     ResourcePrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)

@@ -3,15 +3,15 @@ package printer
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-abstract class AbstractRecursivePrinter<X, Y> {
-    private String levelConstant = "    "
-    private String levelIndicator = ""
-    private String id
+abstract class AbstractPrinter<X, Y> {
+    def levelConstant = "    "
+    def levelIndicator = ""
+    def id
 
-    public AbstractRecursivePrinter() {
+    public AbstractPrinter() {
     }
 
-    public AbstractRecursivePrinter(String idOfItemToPrint, String levelIndicator) {
+    public AbstractPrinter(String idOfItemToPrint, String levelIndicator) {
         this.id = idOfItemToPrint
         this.levelIndicator = levelIndicator
     }

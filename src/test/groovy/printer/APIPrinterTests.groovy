@@ -1,31 +1,6 @@
 package printer
 
-import printer.APIPrinter
-import spock.lang.Specification
-
-class APIPrinterTests extends Specification {
-
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    def oldOut
-    def oldErr
-    
-    void setup() {
-        /*
-        * Since this printer.APIPrinterTests is in charge of print,
-        * we should have some place where to validate printed text
-        * Note: also check out the cleanup() method
-        */
-        oldOut = System.out
-        oldErr = System.err
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
-    }
-
-    void cleanup() {
-        System.setOut oldOut
-        System.setErr oldErr
-    }
+class APIPrinterTests extends AbstractTextPrintingTests {
     
     def "Text from one end point"() {
         when:
@@ -35,7 +10,7 @@ class APIPrinterTests extends Specification {
             new APIPrinter().printResources(pathOfRamlFile)
 
         then:
-            expectedOutput == outContent.toString()
+            expectedOutput == getPrintedContent().toString()
     }
 
     def "Text from many end points"() {
@@ -46,7 +21,7 @@ class APIPrinterTests extends Specification {
             new APIPrinter().printResources(pathOfRamlFile)
 
         then:
-            expectedOutput == outContent.toString()
+            expectedOutput == getPrintedContent().toString()
     }
 
 

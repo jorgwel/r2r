@@ -1,13 +1,12 @@
-package printer.specialists;
+package printer.specialists
 
-import org.raml.model.MimeType
 import org.raml.model.parameter.UriParameter
-import printer.AbstractRecursivePrinter
+import printer.AbstractPrinter
 
 /**
  * Created by jorge.bautista on 7/12/15.
  */
-class UriParametersPrinter extends AbstractRecursivePrinter<String, UriParameter> {
+class UriParametersPrinter extends AbstractPrinter<String, UriParameter> {
 
     UriParametersPrinter(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)
