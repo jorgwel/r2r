@@ -1,26 +1,25 @@
 package apitree
 
-import apitree.recollectors.ResourceRecollector
 import validation.APIFileValidator
 
-class APITree {
+class RESTStructureContainer {
 
     def resourcesContainer
     def relativePathOfApiDescriptorFile
 
-    APITree(){
+    RESTStructureContainer(){
         this("")
     }
 
-    APITree(filePath) {
+    RESTStructureContainer(filePath) {
         this.resourcesContainer = [] as LinkedList
         this.relativePathOfApiDescriptorFile = filePath == null? "": filePath
     }
 
     def fillTree() {
         def apiValidator = new APIFileValidator(this.relativePathOfApiDescriptorFile)
-        apiValidator.validateRamlFile()
-        //collectResources()
+        apiValidator.validateApiFile()
+//        collectResources(new ResourceColle)
         
 //        def apiPrinter = new APIPrinter()
 //        apiPrinter.printResources(this.relativePathOfApiDescriptorFile)
@@ -28,6 +27,6 @@ class APITree {
     
 //    def collectResources() {
 //        ResourceRecollector resourceRecollector = new ResourceRecollector()
-//        def resources = resourceRecollector.recollect(resourcesContainer)
+//        def resources = resourceRecollector.recursiveRecollect(resourcesContainer)
 //    }
 }

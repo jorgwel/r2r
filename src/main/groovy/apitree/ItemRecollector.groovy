@@ -13,7 +13,7 @@ abstract class ItemRecollector<X, Y> {
         this.levelIndicator = levelIndicator
     }
 
-    void traverse(Map<X, Y> items) {
+    void recursiveRecollect(Map<X, Y> items) {
         if(items == null)
             items = Collections.emptyMap()
 

@@ -1,6 +1,8 @@
 package apitree.recollectors
 
-class ResourceRecollector  {
+import apitree.ItemRecollector
+
+class ResourceRecollector {
 
     ResourceRecollector(String idOfItemToPrint, String levelIndicator) {
         super(idOfItemToPrint, levelIndicator)
@@ -8,13 +10,13 @@ class ResourceRecollector  {
     }
 
 //    @Override
-//    public void traverse(Map<String, Resource> resources) {//Map<String, Resource>
+//    public void traverse(Map<String, RESTResource> resources) {//Map<String, RESTResource>
 //        def resourcesIterator = resources.iterator()
 //
 //        incrementLevelIndicator()
 //        while (resourcesIterator.hasNext()) {
 //
-//            Map.Entry<String, Resource> resourceEntry = resourcesIterator.next()
+//            Map.Entry<String, RESTResource> resourceEntry = resourcesIterator.next()
 //            printObject resourceEntry
 //
 //            if (resourceEntry.value.resources.size() > 0)
@@ -25,20 +27,20 @@ class ResourceRecollector  {
 //    }
 
 //    @Override
-//    void printObject(Map.Entry<String, Resource> resourceEntry) {
+//    void printObject(Map.Entry<String, RESTResource> resourceEntry) {
 //        printSingleProperties(resourceEntry)
 //        printCollections(resourceEntry)
 //        println ""
 //    }
 //
-//    private void printCollections(Map.Entry<String, Resource> resourceEntry) {
+//    private void printCollections(Map.Entry<String, RESTResource> resourceEntry) {
 //        new ActionPrinter("ACTION", levelIndicator).traverse(resourceEntry.value.actions)
 //        new UriParametersPrinter("URI PARAMETER", levelIndicator).traverse(resourceEntry.value.uriParameters)
 //        new UriParametersPrinter("BASE URI PARAMETER", levelIndicator).traverse(resourceEntry.value.baseUriParameters)
 //        new UriParametersPrinter("RESOLVED URI PARAMETER", levelIndicator).traverse(resourceEntry.value.resolvedUriParameters)
 //    }
 
-//    private void printSingleProperties(Map.Entry<String, Resource> resourceEntry) {
+//    private void printSingleProperties(Map.Entry<String, RESTResource> resourceEntry) {
 //
 //        def resource = resourceEntry.value
 //

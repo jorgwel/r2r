@@ -16,7 +16,7 @@ class APIFileValidator {
         this.relativePathFile = pathFile != null? pathFile : "" 
     }
 
-    def validateRamlFile() {
+    def validateApiFile() {
         if (relativePathFile.isEmpty())
             throw new FileNotSpecified()
         if (!getFile(relativePathFile).exists())

@@ -12,13 +12,13 @@ class Util {
     }
 
     def static Raml bringRamlInstance(String filePath) {
-        new APIFileValidator(filePath).validateRamlFile()
+        new APIFileValidator(filePath).validateApiFile()
         def inputStream = getInputStream filePath
         new RamlDocumentBuilder().build inputStream, filePath
     }
 
     def static InputStream getInputStream(String resourceLocation) {
-        new APIFileValidator(resourceLocation).validateRamlFile()
+        new APIFileValidator(resourceLocation).validateApiFile()
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
     }
     

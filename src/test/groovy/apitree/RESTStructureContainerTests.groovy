@@ -1,28 +1,28 @@
 package apitree
 
-import apitree.APITree
 import spock.lang.Specification
 import validation.APIFileValidator
 
-class APITreeTests extends Specification{
+class RESTStructureContainerTests extends Specification{
 
-    def "APITree class exists"() {
+    def "RESTStructureContainer class exists"() {
 
-        APITree instance = APITree.class.newInstance()
-        
+        RESTStructureContainer instance = RESTStructureContainer.class.newInstance()
         expect: instance != null
 
     }
     
     def "Get Resources from tree"(){
-        def apiTreeInstance = new APITree()
+        def apiTreeInstance = new RESTStructureContainer()
         def listOfResources = apiTreeInstance.resourcesContainer
-        expect: listOfResources != null 
+        
+        expect: 
+            listOfResources != null 
     }
 
     def "If we want to collect without an assigned path name, a FileNotSpecified exception is raised"(){
         setup:
-            def apiTree = new APITree()
+            def apiTree = new RESTStructureContainer()
 
         when:
             apiTree.fillTree()
@@ -33,7 +33,7 @@ class APITreeTests extends Specification{
 
     def "If we pass an inexistant file, a NotExistingFile exception is raised"(){
         setup:
-            def apiTree = new APITree("file_doesnt_exists.txt")
+            def apiTree = new RESTStructureContainer("file_doesnt_exists.txt")
 
         when:
             apiTree.fillTree()
@@ -44,7 +44,7 @@ class APITreeTests extends Specification{
 
     def "If we pass an invalid RAML file, an InvalidRamlFile exception is raised"(){
         setup:
-            def apiTree = new APITree("ramlexamples/invalid.raml")
+            def apiTree = new RESTStructureContainer("ramlexamples/invalid.raml")
 
         when:
             apiTree.fillTree()
@@ -53,16 +53,16 @@ class APITreeTests extends Specification{
             thrown APIFileValidator.InvalidRamlFile
     }
 
-//    def "Passing a valid file with 1 resource returns LinkedList with 1 resource inside"(){
-//        setup:
-//            def apiTree = new APITree("ramlexamples/one_end_point.raml")
-//
-//        when:
-//            apiTree.fillTree()
-//
-//        then:
-//            apiTree.resourcesContainer.size() == 1
-//    }
+    def "Passing a valid file with 1 resource returns LinkedList with 1 resource inside"(){
+        setup:
+            def apiTree = new RESTStructureContainer("ramlexamples/one_end_point.raml")
+
+        when:
+            apiTree.fillTree()
+
+        then:
+            apiTree.resourcesContainer.size() == 1
+    }
 
 
 }
