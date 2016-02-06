@@ -1,14 +1,14 @@
 package restconverters
 
-import apitree.apiitems.RESTResource
+import apitree.apiitems.GenericRESTResource
 import org.raml.model.Resource
 
-class ResourceConverter implements RESTElementConverter <Map.Entry<String, Resource>, RESTResource>{
+class ResourceConverter implements RESTElementConverter <Map.Entry<String, Resource>, GenericRESTResource>{
     @Override
-    RESTResource convert(Map.Entry<String, Resource> resourceEntry) {
+    GenericRESTResource convert(Map.Entry<String, Resource> resourceEntry) {
         def resource = resourceEntry.getValue()
         println "ssuri: ${resource}"
-        new RESTResource(
+        new GenericRESTResource(
                 name: resourceEntry.key,
                 uri: resource.uri,
                 

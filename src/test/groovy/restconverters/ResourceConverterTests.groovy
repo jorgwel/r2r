@@ -1,6 +1,6 @@
 package restconverters
 
-import apitree.apiitems.RESTResource
+import apitree.apiitems.GenericRESTResource
 import org.raml.model.Resource
 import spock.lang.Specification
 
@@ -96,7 +96,7 @@ class ResourceConverterTests extends Specification{
             def resultObject = new ResourceConverter ().convert(new Resource())
 
         then:
-            resultObject instanceof RESTResource
+            resultObject instanceof GenericRESTResource
 
     }
 

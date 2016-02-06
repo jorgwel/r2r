@@ -21,7 +21,7 @@ class RESTStructureContainer {
         apiValidator.validateApiFile()
 //        collectResources(new ResourceColle)
         
-//        def apiPrinter = new APIPrinter()
+//        def apiPrinter = new RestApiSpecificationPrinter()
 //        apiPrinter.printResources(this.relativePathOfApiDescriptorFile)
     }
     
