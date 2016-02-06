@@ -1,7 +1,7 @@
 package apitree.apiitems
 
 
-class RESTResource {
+class GenericRESTResource {
     def uri
     def name
     def relativeUri

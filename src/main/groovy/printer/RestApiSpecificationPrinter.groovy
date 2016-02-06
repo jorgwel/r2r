@@ -3,7 +3,7 @@ package printer
 import printer.specialists.ResourcePrinter
 import util.Util
 
-class APIPrinter {
+class RestApiSpecificationPrinter {
 
     def printResources(String ramlFilePath) {
         def ramlDocumentInstance = Util.bringRamlInstance(ramlFilePath)
