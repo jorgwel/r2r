@@ -1,0 +1,7 @@
+@startuml
+
+    [*] --> RAMLDiagram
+    Converter --> RAMLDiagram: Uses
+    Converter --> GrailsApplication: Converts it to
+
+@enduml
