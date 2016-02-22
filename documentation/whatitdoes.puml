@@ -1,7 +1,30 @@
 @startuml
 
-    [*] --> RAMLDiagram
-    Converter --> RAMLDiagram: Uses
-    Converter --> GrailsApplication: Converts it to
+skinparam state {
+  BackgroundColor<<MasAmarillo>> #F0BB1D
+  Backgroundcolor<<MasAzul>> #6699ff
+  Backgroundcolor<<MasVerde>> #99ff66
+  Backgroundcolor<<MasRosa>> #ff6699
+  
+}
+
+    [*] --> r2r
+    r2r -right-> GrailsApplication: into
+'    r2r -down-> LocalAPIInstance: this
+    r2r -left-> RAMLDiagram: <b>converts a</b>
+
+'    Dredd -up-> RAMLDiagram: <b>uses</b>
+'   Dredd -up-> LocalAPIInstance: tests
+'  Dredd -up-> GrailsApplication: tests
+
+'    r2r -> Dredd
+    
+    state r2r as "<b><size:24> r 2 r </size></b>" <<MasAmarillo>>
+'    state GrailsApplication as "REST <b>Grails</b>, Rails,\nDjango application"
+    state GrailsApplication as "<b>Grails</b> REST\napplication"
+    
+'    state LocalAPIInstance as "Local API\ninstance" <<MasRosa>>
+    state RAMLDiagram as "RAML\nDiagram" <<MasVerde>>
+'    state Dredd as "Dredd"  <<MasAzul>>
 
 @enduml

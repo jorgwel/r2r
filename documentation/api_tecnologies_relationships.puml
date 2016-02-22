@@ -1,0 +1,119 @@
+@startuml
+
+
+skinparam state {
+  BackgroundColor<<MasAmarillo>> #F0BB1D
+  BackgroundColor<<MasRojo>> #FB7374
+}
+
+'	[*] --> Toolsforapitesting
+
+	state ToolsForAPITesting {
+
+'		[*] --> Dredd
+'		[*] --> Apiary
+'		[*] --> APIBluePrint
+'		[*] --> LocalAPI
+'		[*] --> RAML
+		
+		Apiary --> RequestsListener: validates an\nAPI through
+		Apiary --> OnlineEditor: edits API\ndescription \nthrough
+		Apiary --> Dredd: for testing\nAPI uses
+		Apiary --> PrecioApiary: cuesta
+
+		Apiary -right-> Fake.js: para generacion de\ninformacion puede usar\n(aunque el procedimiento\nsería manual)
+
+		Apiary --> RiesgoApiary: riesgo
+
+		PrecioApiary --> ModoGratuito: tiene un
+	
+		APIBluePrint --> MarkdownSintax: describes\nWeb APIs\nwith
+
+		OnlineEditor --> APIBluePrint: uses\n(language)
+		
+		Dredd --> ContinuosIntegration: can be\nused with
+		Dredd --> Gavel: For judging if a\nparticular API\nresponse is valid\nor if it is not
+
+		LocalAPI --> RAML: describes\nWeb APIs\nwith
+		
+
+
+		LocalAPI --> YourOwnServer: validates an\nAPI through
+
+		LocalAPI --> Abao: for testing\nAPI uses
+
+		LocalAPI --> PrecioLocalAPI: cuesta
+
+		LocalAPI --> RiesgoLocalAPI: riesgo
+
+		LocalAPI -left-> Templates: para generacion de\ninformacion usar
+		Templates --> Programador: hechos por
+		Templates -down-> Fake.js: Usando el\nAPI de 
+
+		RAML --> YAML: describes\nweb apis\nwith
+
+
+		Gavel: Please refer to Gavel's\nbehavior specification.
+		ContinuosIntegration: Jenkings and Travis can\nhave API documentation\nup-to-date, all the time. 
+		Dredd: Is a language agnostic\ncommand-line tool for\nvalidating API\ndocumentation
+		APIBluePrint: Is a Web API\ndocumentation\nlanguage
+		RequestsListener: Records http requests\nand responses
+
+		Dredd: HTTP API\nTesting Framework
+		Apiary: Suite de herramientas\nonline para crear, validar\ny testear un API
+		RAML: Language to\nmodel REST\nAPIs
+		PrecioApiary: <b>$175</b> <b>dólares</b><b>mensuales</b>
+		PrecioLocalAPI: <b>Libre, gratis, sin letras chiquitas</b>
+		RequestsListener: Which is deployed in a\ndinamicaly created server\nhosted by apiary
+
+		LocalAPI: LocalAPI generates dummy\ndata and runs a local\nAPI based on RAML.
+
+		YourOwnServer: You have to host\nit in some machine\nof yours by creating\nan instance of\nLocalAPI
+
+		ModoGratuito: La desventaja de esta\nmodalidad es que\nno puedes tener APIs\nprivadas
+
+		Abao: Command-line tool for\ntesting API documentation\nwritten in RAML format\nagainst its backend\nimplementation
+
+		Templates: Son scripts de Javascript\nusando el API de Fake.js que\ndescribe responses (modelos JSON)
+
+		RiesgoApiary: Costo $$ y facilidad de generar\nresponses: aparentemente es\nmucho más sencillo generar\n"mock responses" en LocalAPI con\nla integración que tiene en\nsu ciclo de vida con Fake.js
+
+		RiesgoLocalAPI: Sus herramientas no están\nintegradas (como las de Apiary \n[excepto Dredd]) y el trabajo de\nintegrarlas mientras estamos en\ndesarrollo puede ser un factor\nimportante.
+
+		
+
+		state Dredd as "<b>Dredd</b>"
+		state Apiary as "<size:20><b>Apiary</b></size>" <<MasAmarillo>>
+		state APIBluePrint as "<b>APIBluePrint</b>"
+		state LocalAPI as "<size:20><b>LocalAPI</b></size>" <<MasAmarillo>>
+		state RAML as "<b>RAML</b>"
+		state PrecioApiary as "<b>Precio de Apiary</b>"
+		state PrecioLocalAPI as "<b>Precio de LocalAPI</b>"
+		state ToolsForAPITesting as "<size:28>Tools for API testing</size>" <<MasAmarillo>>
+		state ModoGratuito as "Modo Gratuito"
+		state RiesgoApiary as "Riesgos de Apiary" <<MasRojo>>
+		state RiesgoLocalAPI as "Riesgos de LocalAPI" <<MasRojo>>
+
+
+	'	[*] --> Drafter
+	'	TypeOfOutput --> RefractParseResult
+	'	TypeOfOutput --> NormalASTParseResult
+	'	SnowCrashLibrary --> APIBluePrint: is a parser of
+	'	Drafter --> SnowCrashLibrary: uses
+	'	Drafter --> DrafterSetOfWrappers: also provides
+	'	Drafter --> APIBluePrint: is a complex\nbuilder of
+	'	Drafter --> TypeOfOutput: you can\nselect the
+	'	TypeOfOutput --> SerializationFormats: both types of output\nhave 2 different
+	'	SerializationFormats --> YAML
+	'	SerializationFormats --> JSON
+	'	Dredd ---> APIBluePrint: Works\nwith
+	'	DrafterSetOfWrappers: For serialization,\nof parsing result, via\nSOS library into JSON\nand YAML format.
+	'	TypeOfOutput: RefractParseResult\nand\nNormalASTParseResult
+	'	RefractParseResult: <b>This is the default</b>\nParse Result is defined\nin Refract elements according\nto Parse Result Namespace\n
+	'	NormalASTParseResult: Parse Result defined\nby the API Blueprint\nAST Parse Result.
+	'	YAML: <b>This is the default</b>
+	
+	}
+'Based in: https://github.com/apiaryio/drafter#drafter-command-line-tool
+'https://github.com/apiaryio/
+@enduml
