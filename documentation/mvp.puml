@@ -1,0 +1,13 @@
+@startuml
+== Bring resources  ==
+	ResourcePicker -> RAMLDiagram: resources = requestResourcesAndPaths() 
+	ResourcePicker -> H2Database: saveResources(resources)
+== Generate commands  ==
+	CommandGenerator -> H2Database: resources = readResources()
+	CommandGenerator -> CommandGenerator: commands = generateCommands()
+	CommandGenerator -> H2Database: saveCommands(commands)
+== Execute commands  ==
+	CommandExecuter -> H2Database: commands = readCommands()
+	CommandExecuter -> CommandExecuter:executeCommands()
+
+@enduml
