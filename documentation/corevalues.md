@@ -1,12 +1,12 @@
 # Raml To Grails
 
 ## Vision
-r2g will provide developers in a hackathon of a fast way to create APIs by only defining RAML files
+r2r will provide developers in a hackathon of a fast way to create APIs by only defining RAML files
 
 ---
 
 ## Mission
-r2g takes an API specified through RAML and converts it into a real runnable API instance using Grails technology and local API. Me myself and Irene are going to work at this project working on free times and fridays after guitar classes. 
+r2r takes an API specified through RAML and converts it into a real runnable API instance using Grails technology and local API. Me myself and Irene are going to work at this project working on free times and fridays after guitar classes. 
 
 ---
 
