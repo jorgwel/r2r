@@ -11,7 +11,7 @@ r2r takes an API specified through RAML and converts it into a real runnable API
 ---
 
 ## Core Values
-clean code; test first; lean development; mandatory fridays; share through facebook, twitter and instagram; timesrunning 
+clean code; test first; lean development; mandatory thursdays; share through facebook, twitter and instagram; timesrunning 
 
 ---
 
