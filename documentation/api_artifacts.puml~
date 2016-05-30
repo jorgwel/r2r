@@ -1,9 +1,0 @@
-@startuml
-
-	Resource --> Actions: has
-	Resource --> Resource: has
-	Actions --> QueryParameters: have
-	Actions --> Responses: have
-	Responses --> MimeType: have
-
-@enduml
