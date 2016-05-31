@@ -29,5 +29,9 @@ Hackathons, IT schools, IT companies (at education area)
 
 ## Action Plans
 1. Finish a demo with CRUD operations on a user endpoint
+<p style="color: gray">
 2. Put it on github since the begining
+</p>
+<p style="color: gray">
 3. Answer before 3 hours any comment in GitHub
+</p>

@@ -14,6 +14,7 @@ verify_java_can_be_executed () {
 verify_plantuml_path_existence () { 
     number_of_lines=`echo $PLANTUML | wc -l`
     if [ $number_of_lines -ne 1 ]; then
+	echo "PlantUML is not installed or environment variable $PLANTUML is not pointing to the absolute path of the plantuml jar. If you haven't downloaded PlantUML, you can do it from here http://plantuml.com/"
         exit MISCONFIGURATION_ERROR
     fi
 }
