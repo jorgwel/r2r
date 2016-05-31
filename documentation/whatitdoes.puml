@@ -24,7 +24,7 @@ skinparam state {
     state GrailsApplication as "<b>Grails</b> REST\napplication"
     
 '    state LocalAPIInstance as "Local API\ninstance" <<MasRosa>>
-    state RAMLDiagram as "RAML\nDiagram" <<MasVerde>>
+    state RAMLDiagram as "RAML\nSpecification" <<MasVerde>>
 '    state Dredd as "Dredd"  <<MasAzul>>
 
 @enduml
