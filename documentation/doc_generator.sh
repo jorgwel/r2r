@@ -39,10 +39,18 @@ generate_diagrams_for_each_plantuml_file () {
     done
 }
 
+create_diagrams_folder () {
+    directory='./diagrams'
+    if [ ! -d "$directory" ]; then
+	mkdir "$directory"
+    fi
+}
 
+    
 verify_java_can_be_executed
 verify_plantuml_path_existence
 verify_java_and_plantuml_play_well
+create_diagrams_folder
 generate_diagrams_for_each_plantuml_file
 
 exit 0
