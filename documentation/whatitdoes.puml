@@ -7,7 +7,7 @@ skinparam state {
   Backgroundcolor<<MasRosa>> #ff6699
   
 }
-
+state whatIdDoes as "What it does?" {
     [*] --> r2r
     r2r -right-> GrailsApplication: into
 '    r2r -down-> LocalAPIInstance: this
@@ -26,5 +26,38 @@ skinparam state {
 '    state LocalAPIInstance as "Local API\ninstance" <<MasRosa>>
     state RAMLDiagram as "RAML\nSpecification" <<MasVerde>>
 '    state Dredd as "Dredd"  <<MasAzul>>
+}
+
+
+state components as "Components" {
+      state RAMLFile <<MasAzul>>
+      state Commands <<MasAzul>> 
+      state Database <<MasAzul>>
+      state RESTDefinitionsStatements <<MasAzul>> 
+      state RESTProjectInCertainTechnology <<MasAzul>>
+
+      
+      state Commander as "<b>Commander</b>": In charge of interpret orders from terminal
+      state RESTResourcesRecollector as  "<b>RESTResourcesRecollector</b>": Collect Resources from RAML file and\npersist them to database
+      state RESTDefinitionsCreator as "<b>RESTDefinitionsCreator</b>": Takes Resources from database and\ncreates Statements which define\nthe REST API
+      state APICreator as "<b>APICreator</b>": Takes the Statements convert\nthem into verbs compatible with the\ntechnology in which the API will be\ndefined (<b>Commander</b> might be\nused to execute these statements)
+      state APIValidator As "<b>APIValidator</b>": In charge of test the api created
+
+      Commands --> RESTResourcesRecollector: orchestrate
+      Commands --> RESTDefinitionsCreator: orchestrate
+      Commands --> APICreator: orchestrate
+      Commands --> APIValidator: orchestrate
+
+      Commander --> Commands : in charge of give an\ninterpretation to\ncommands
+      RESTResourcesRecollector --> RAMLFile: Reads Resources from
+      RESTResourcesRecollector --> Database: Saves resources\ninto database
+      RESTDefinitionsCreator --> Database: Takes resources\nfrom
+      RESTDefinitionsCreator --> RESTDefinitionsStatements: Generates
+      APICreator --> RESTDefinitionsStatements: Uses
+      APICreator --> RESTProjectInCertainTechnology: Generates
+      APIValidator --> RESTProjectInCertainTechnology: Validates
+
+
+}
 
 @enduml
