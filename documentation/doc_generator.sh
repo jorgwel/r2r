@@ -31,11 +31,10 @@ verify_java_and_plantuml_play_well () {
 #get every .puml file and generate the diagram in the folder diagrams
 generate_diagrams_for_each_plantuml_file () {
     list_of_plantuml_files=`ls *.puml | tr ' ' '\n'`
-#   list_of_modified_plantuml_files=`git ls-files -m | grep puml`
     for plantuml_file in $(echo "$list_of_plantuml_files"); do
-	echo -n "Generating diagrams for file \"$plantuml_file\"..."
+	echo "Generating diagrams for file \"$plantuml_file\"..."
 	`$PLANT_COMMAND $plantuml_file -svg -o $DESTINATION_FOLDER`
-	echo "Done"
+        
     done
 }
 
@@ -46,11 +45,30 @@ create_diagrams_folder () {
     fi
 }
 
-    
+
+generate_diagrams(){
+    create_diagrams_folder
+    generate_diagrams_for_each_plantuml_file
+}
+
+
+
 verify_java_can_be_executed
 verify_plantuml_path_existence
 verify_java_and_plantuml_play_well
-create_diagrams_folder
-generate_diagrams_for_each_plantuml_file
+
+for dir in `find . -depth -type d | sort`;
+do
+    (
+        cd "$dir"
+        count_of_plantuml_files=`find . -maxdepth 1 -type f -name "*.puml" -exec printf x \;|wc -c`
+        if [ "$count_of_plantuml_files" -gt 0 ]; then
+            generate_diagrams
+       	    echo "Done for $dir"
+        else
+            echo "No PlantUML files in $dir"
+        fi
+    )
+done
 
 exit 0
